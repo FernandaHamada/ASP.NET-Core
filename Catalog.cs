@@ -5,7 +5,8 @@ using System.Threading.Tasks;
 
 namespace web
 {
-    public class Catalog
+    // ICatalog interface do catálogo
+    public class Catalog : ICatalog
     {
         public List<Book> GetBooks()
         {

@@ -6,11 +6,12 @@ using System.Threading.Tasks;
 
 namespace web
 {
-    public class Report
+    // IReport interface de Relatório
+    public class Report : IReport
     {
-        private readonly Catalog catalog;
+        private readonly ICatalog catalog;
 
-        public Report(Catalog catalog)
+        public Report(ICatalog catalog)
         {
             this.catalog = catalog;
         }
