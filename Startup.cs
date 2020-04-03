@@ -16,7 +16,18 @@ namespace web
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddTransient<ICatalog, Catalog>();
+            //TEMPORÁRIO cria uma nova instanica do serviço solicitado
+//           services.AddTransient<ICatalog, Catalog>();
+//           services.AddTransient<IReport, Report>();
+
+            // ÚNICA INSTANCIA deste serviço para cada requisição através do navegador
+//           services.AddScoped<ICatalog, Catalog>();
+//           services.AddScoped<IReport, Report>();
+
+            // INSTANCIA ÚNICA, trabalha com a mesma instancia
+            Catalog catalog = new Catalog();
+            services.AddSingleton<ICatalog> (catalog);
+            services.AddSingleton<IReport> (new Report(catalog));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -27,8 +38,9 @@ namespace web
                 app.UseDeveloperExceptionPage();
             }
 
+            // Mecanismo de injeção de dependência, criando uma nova instancia da classe Catalog a partir da interface Icatalog
             ICatalog catalog = serviceProvider.GetService<ICatalog>();
-            IReport report = new Report(catalog);
+            IReport report = serviceProvider.GetService<IReport>();
 
             app.UseRouting();
 

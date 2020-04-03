@@ -18,7 +18,7 @@ namespace web
 
         public async Task Print(HttpContext context)
         {
-            foreach (var book in catalog.GetBooks())
+            foreach (var book in  catalog.GetBooks())
             {
                 await context.Response.WriteAsync($"<p>{book.Code,-10}{book.Name,-40}{book.Price.ToString("C"),10}</p>");
             }
